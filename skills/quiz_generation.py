@@ -36,7 +36,7 @@ def generate_quiz(subject: str, topic: str, difficulty: str, num_questions: int 
     response = client.models.generate_content(
         model = "gemini-2.5-flash", contents = prompt
     )
-    print(response.text)
+    # print(response.text)
 
     cleaned_text = response.text.strip()
     cleaned_text = cleaned_text.replace("```json", "")
