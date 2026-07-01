@@ -6,14 +6,15 @@ def main():
 
     coordinator = CoordinatorAgent()
 
-    results = coordinator.complete_learning_session(
-        subject = "Math", topic = "Fractions", score = 60
-    )
+    session = coordinator.run_learning_session(subject = "Math", topic = "Fractions", difficulty = "Beginner")
+    quiz = session["quiz"]
+    student_answers = ["A", "D", "B"]
+    results = coordinator.complete_learning_session(subject = "Math", topic = "Fractions", quiz = quiz, student_answers = student_answers)
 
     print("\nSession Results:\n")
-    print(f"Subject: {results['subject']}")
-    print(f"Topic: {results['topic']}")
-    print(f"Score: {results['score']}%")
+    print(results["grading_results"]["score"])
+    print(results["grading_results"]["correct"])
+    print(results["grading_results"]["missed_questions"])
 
     print("\nCoach Feedback:\n")
     print(results["coach_feedback"])
