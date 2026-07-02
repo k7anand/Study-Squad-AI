@@ -17,6 +17,7 @@ temp_adk_demo/
 
 # SQLite
 *.db
+study_squad.db
 
 # Logs
 *.log
