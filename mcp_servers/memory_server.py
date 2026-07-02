@@ -1,17 +1,26 @@
 from mcp.server.fastmcp import FastMCP
+from database import (
+    initialize_database,
+    insert_quiz_result,
+    get_all_quiz_results,
+    get_weak_topics as get_weak_topics_db,
+    clear_database
+)
+
 
 # Create MCP server:
 mcp = FastMCP("Study Squad Memory Server")
 
-# In-memory storage:
-quiz_history: list[dict] = []
+# Make sure that the database exists:
+initialize_database()
 
 
 
 @mcp.tool()
 def save_quiz_result(subject: str, topic: str, score: float) -> str:
-    """Save a quiz result to memory."""
-    quiz_history.append({"subject": subject, "topic": topic, "score": score})
+    """Save a quiz result to the database."""
+
+    insert_quiz_result(subject, topic, score)
 
     return (
         f"Saved result: "
@@ -22,23 +31,23 @@ def save_quiz_result(subject: str, topic: str, score: float) -> str:
 @mcp.tool()
 def get_quiz_history():
     """Retrieve all quiz results."""
-    return quiz_history
+    return get_all_quiz_results()
 
 
 @mcp.tool()
 def get_weak_topics(threshold: float = 70):
-    """Return topics with scores below threshold."""
-    weak_topics = []
+    """Return topics with scores below the threshold."""
+    return get_weak_topics_db(threshold)
 
-    for result in quiz_history:
-        if result["score"] < threshold:
-            weak_topics.append({"subject": result["subject"], "topic": result["topic"], "score": result["score"]})
 
-    return weak_topics
+@mcp.tool()
+def reset_quiz_history():
+    """Delete all stored quiz results."""
+    clear_database()
+    return "Quiz history has been cleared!"
 
 
 
 if __name__ == "__main__":
     mcp.run()
-
-
+    
