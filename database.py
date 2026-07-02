@@ -1,6 +1,8 @@
 import sqlite3
+from pathlib import Path
 
-database_name = "study_squad.db"
+# Always use the database in the project root
+database_name = Path(__file__).resolve().parent / "study_squad.db"
 
 
 
@@ -92,11 +94,8 @@ def clear_database():
 
     connection = get_connection()
     cursor = connection.cursor()
-
-    cursor.execute("""
-        DELETE FROM quiz_results
-    """)
-
+    cursor.execute("DELETE FROM quiz_results")
+    cursor.execute("DELETE FROM sqlite_sequence WHERE name='quiz_results'")
     connection.commit()
     connection.close()
 
