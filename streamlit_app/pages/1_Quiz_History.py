@@ -5,7 +5,8 @@ sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 import streamlit as st
 import pandas as pd
-
+from agents.coordinator_agent import CoordinatorAgent
+from mcp_servers.memory_server import reset_quiz_history
 from database import get_all_quiz_results
 
 st.set_page_config(page_title = "Quiz History", layout = "centered")
