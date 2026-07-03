@@ -1,0 +1,31 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.env
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# SQLite Database (avoid copying local DB if it gets initialized)
+*.db
+*.db-journal
+
+# OS files
+.DS_Store
+Thumbs.db

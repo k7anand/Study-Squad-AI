@@ -42,4 +42,4 @@ def generate_quiz(subject: str, topic: str, difficulty: str, num_questions: int 
     cleaned_text = cleaned_text.replace("```json", "")
     cleaned_text = cleaned_text.replace("```", "")
     cleaned_text = cleaned_text.strip()
-    return json.loads(response.text)
+    return json.loads(cleaned_text)

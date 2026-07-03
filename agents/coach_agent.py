@@ -71,12 +71,15 @@ class CoachAgent:
         4. A short motivational message.
 
         Keep the response concise and encouraging.
+
+        If the student has no weak topics, then congratulate them on their progress.
+        Suggest one way to keep practicing and encourage them to try on a more difficult level. 
         """
         
         try:
             response = client.models.generate_content(model = "gemini-3.5-flash", contents = prompt)
         except Exception as e:
-            return("Unable to generate AI coaching advice!\n\n{e}")
+            return(f"Unable to generate AI coaching advice!\n\n{e}")
 
         return response.text
         
