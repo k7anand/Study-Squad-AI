@@ -5,7 +5,7 @@ from adk_app.quiz_tool import quiz_generation_tool
 quiz_tool = FunctionTool(quiz_generation_tool)
 
 root_agent = Agent(
-    model = "gemini-3.5-flash",
+    model = "gemini-2.5-flash",
     name = "tutor_agent",
     description = "Study Squad AI Tutor Agent",
     instruction = """

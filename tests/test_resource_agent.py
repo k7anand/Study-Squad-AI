@@ -10,7 +10,7 @@ def main():
     print(agent.recommend_resources("Fractions"))
 
     print("\nAI Resource Agent:\n")
-    print(agent.recommend_resources_ai("Fractions"))
+    print(agent.recommend_resources_ai(topic = "Fractions", difficulty = "Beginner"))
 
 
 

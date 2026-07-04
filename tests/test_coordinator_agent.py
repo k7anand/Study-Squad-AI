@@ -9,7 +9,7 @@ def main():
     session = coordinator.run_learning_session(subject = "Math", topic = "Fractions", difficulty = "Beginner")
     quiz = session["quiz"]
     student_answers = ["A", "D", "B"]
-    results = coordinator.complete_learning_session(subject = "Math", topic = "Fractions", quiz = quiz, student_answers = student_answers)
+    results = coordinator.complete_learning_session(subject = "Math", topic = "Fractions", difficulty = "Beginner", quiz = quiz, student_answers = student_answers)
 
     print("\nSession Results:\n")
     print(results["grading_results"]["score"])
