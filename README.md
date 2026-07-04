@@ -1,6 +1,6 @@
 # Study Squad AI
 
-Study Squad AI is a multi-agent educational assistant designed to help students prepare for exams and strengthen their understanding of academic topics. Unlike traditional AI chatbots, Study Squad AI uses a team of specialized agents that collaborate to assess knowledge, identify weaknesses, recommend learning resources, and generate personalized learning plans. 
+Study Squad AI is an AI-powered educational assistant that helps students learn through personalized assessments, progress tracking, motivational coaching, and curated learning resources. Rather than acting as a general-purpose chatbot, Study Squad AI coordinates multiple specialized AI agents that work together to generate quizzes, evaluate student performance, identify learning gaps, recommend educational resources, and monitor progress across study sessions. The application was developed for Kaggle's **AI Agents: Intensive Vibe Coding Capstone** under the **Agents for Good** track.
 
 The project demonstrates modern agentic AI concepts that include:
 
@@ -13,24 +13,30 @@ The project demonstrates modern agentic AI concepts that include:
 ## Repository Structure
 
 agents/ - Specialized AI agents
-
-mcp/ - MCP Servers and tool integrations
-
+adk_app/ - Google ADK demonstration
+mcp_servers/ - MCP Servers and tool integrations
 skills/ - Reusable agent skills
-
 streamlit_app/ - User interface and application entry point
+tests/ - Test suite
+database.py - SQLite utilities
+grading.py - Quiz grading logic 
+Dockerfile
+requirements.txt
 
-## Project Goals
+## Features
 
-The objectives for this project include:
-
-- Building a multi-agent learning assistant using Google ADK,
-- Implementing MCP Servers that provide external tools and memory,
-- Developing reusable Agent Skills for educational workflows,
-- Deploying the application publicly using Google Cloud Run, and
-- Creating a competition-ready demonstration showing agent collaboration.
+- Personalized quiz generation
+- Multi-agent orchestration
+- Persistent learning history
+- AI-generated coaching feedback
+- Curated educational resources
+- Interactive Streamlit interface
+- Containerized deployment
+- Google Cloud Run deployment
 
 ## System Architecture
+
+The following diagram summarizes how the major components of Study Squad AI interact during a learning session.
 
 ```mermaid
 graph TD
@@ -38,7 +44,7 @@ graph TD
     Streamlit["Streamlit UI App<br/>(streamlit_app/app.py)"] <--> Coordinator["Coordinator Agent<br/>(agents/coordinator_agent.py)"]
 
     %% Agent Interactions
-    subgraph Agents ["Specialized Agents"]
+    subgraph Agents ["Agents"]
         Coordinator <--> Tutor["Tutor Agent<br/>(agents/tutor_agent.py)"]
         Coordinator <--> Coach["Coach Agent<br/>(agents/coach_agent.py)"]
         Coordinator <--> Resource["Resource Agent<br/>(agents/resource_agent.py)"]
@@ -58,7 +64,7 @@ graph TD
     %% Data & External Integrations
     subgraph Data ["External Resources & Persistence"]
         MemoryServer <--> SQLite[("SQLite Database<br/>(study_squad.db)")]
-        ResourceServer -.-> YouTube["YouTube Search / Curated Resources"]
+        ResourceServer -.-> YouTube["Educational Resources"]
     end
 
     %% Styling
@@ -81,25 +87,41 @@ graph TD
 * **Coordinator Agent**: The central controller that manages the workflow, invokes the Tutor, Coach, and Resource agents, and aggregates their inputs.
 * **Tutor Agent & Quiz Skill**: The Tutor Agent requests a quiz by executing the reusable **Quiz Generation Skill** powered by Gemini.
 * **Coach Agent & Memory MCP Server**: The Coach Agent analyzes quiz scores and leverages the **Memory MCP Server** to query performance logs and identify weak topics saved in the local **SQLite Database**.
-* **Resource Agent & Resource MCP Server**: The Resource Agent queries the **Resource MCP Server** to find appropriate videos (using YouTube search or local listings) based on the student's needs.
+* **Resource Agent & Resource MCP Server**: The Resource Agent queries the **Resource MCP Server** to retrieve curated educational resources based on the student's selected topic and difficulty level.
 
 
 
 ## Technology Stack
 
-- Python
+**AI**
+
+- Google Gemini
 - Google ADK
-- MCP
-- Gemini
+
+**Agent Technologies**
+
+- Multi-Agent Architecture
+- Model Context Protocol (MCP)
+
+**Frontend**
+
 - Streamlit
+
+**Backend**
+
+- Python
 - SQLite
+
+**Deployment**
+
+- Docker
 - Google Cloud Run
 
 ## Current Scope
 
 The initial version of Study Squad AI focuses on:
 
-- Three specialized agents (Tutor, Coach, Resource)
+- Three specialized AI agents (Tutor, Coach, Resource)
 - One reusable Quiz Generation Skill
 - Two MCP servers (Resource and Memory)
 - Streamlit user interface
@@ -107,117 +129,185 @@ The initial version of Study Squad AI focuses on:
 
 Features such as calendar integration, adaptive learning, advanced analytics, and additional resource providers are considered future enhancements and are intentionally outside the scope of the initial release.
 
-## Getting Started
+---
 
-### Prerequisites
+# Getting Started
 
-- Python 3.10+
-- A Gemini API Key (get one from [Google AI Studio](https://aistudio.google.com/))
-- A YouTube API Key (optional, for the Resource MCP server)
+## Clone the Repository
+
+```bash
+git clone <repository-url>
+cd study-squad-ai
+```
 
 ---
 
-### Method 1: Running Locally with Python
+## Create a Virtual Environment
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd study-squad-ai
-   ```
+Windows
 
-2. **Set up a virtual environment**:
-   ```bash
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
+```bash
+python -m venv venv
 
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+venv\Scripts\activate
+```
 
-4. **Configure environment variables**:
-   Create a `.env` file in the root directory (you can copy `.env.example` as a template):
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key
-   YOUTUBE_API_KEY=your_youtube_api_key
-   ```
-   *(Ensure there are no quotation marks around the API keys).*
+macOS / Linux
 
-5. **Run the Streamlit application**:
-   ```bash
-   streamlit run streamlit_app/app.py
-   ```
-   Open your browser and navigate to `http://localhost:8501`.
+```bash
+python -m venv venv
+
+source venv/bin/activate
+```
 
 ---
 
-### Method 2: Running with Docker
+## Install Dependencies
 
-Alternatively, you can build and run the application inside the Docker container you created:
-
-1. **Build the Docker image**:
-   ```bash
-   docker build -t study-squad-ai .
-   ```
-
-2. **Run the Docker container**:
-   ```bash
-   docker run -p 8501:8080 --env-file .env study-squad-ai
-   ```
-   Open your browser and navigate to `http://localhost:8501`.
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Deployment to Google Cloud Run
+## Configure Environment Variables
 
-Follow these steps to build your container image in the cloud and deploy it to Google Cloud Run using the Google Cloud SDK (`gcloud`) in Windows PowerShell or Command Prompt.
+Create a `.env` file in the project root. Use the `.env.example` file available in this repository which is the template for the `.env` file. Copy `.env.example` to `.env` and replace the placeholder values with your own Gemini API key.
 
-### Step 1: Install and Initialize Google Cloud SDK
-Ensure you have the Google Cloud SDK installed. If not, download it from [Google Cloud CLI documentation](https://cloud.google.com/sdk/docs/install).
+Example:
 
-Once installed, authenticate and connect to your Google Cloud account:
-```powershell
+```env
+GEMINI_API_KEY=your_api_key
+```
+
+---
+
+## Run the Application
+
+These commands assume that Docker is installed and that you have already authenticated with Google Cloud using the Google Cloud CLI.
+
+```bash
+streamlit run streamlit_app/app.py
+```
+
+Open
+
+```
+http://localhost:8501
+```
+
+---
+
+# Running with Docker
+
+Build the Docker image.
+
+```bash
+docker build -t study-squad-ai .
+```
+
+Run the container.
+
+```bash
+docker run -p 8501:8080 --env-file .env study-squad-ai
+```
+
+Open
+
+```
+http://localhost:8501
+```
+
+---
+
+# Deploying to Google Cloud Run
+
+## Prerequisites
+
+- Google Cloud CLI
+- Docker
+- Google Cloud Project
+- Billing Enabled
+- Gemini API Key
+
+Authenticate with Google Cloud.
+
+```bash
 gcloud auth login
 ```
 
-### Step 2: Set Your Active Google Cloud Project
-Ensure your local `gcloud` configuration points to your active project ID. This is critical because `gcloud builds` executes within the context of your active project:
-```powershell
+Set your project.
+
+```bash
 gcloud config set project <PROJECT_ID>
 ```
-*(Replace `<PROJECT_ID>` with your project ID, e.g., `primal-monument-455918-h0`).*
 
-### Step 3: Enable Required APIs
-Ensure the Cloud Build and Cloud Run APIs are enabled for your project:
-```powershell
+Enable the required services.
+
+```bash
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com
 ```
 
-### Step 4: Build and Push the Container Image (Google Cloud Build)
-Submit your local code to Google Cloud Build, which will read the `Dockerfile`, compile the image, and host it in Google Container Registry (or Artifact Registry):
-```powershell
+Build the Docker image.
+
+```bash
 gcloud builds submit --tag gcr.io/<PROJECT_ID>/study-squad-ai
 ```
 
-### Step 5: Deploy the Container to Google Cloud Run
-Deploy the newly built container image. In this command:
-- We pass the Gemini API key securely to the runtime environment using `--set-env-vars`.
-- Ensure you do not surround keys in quotation marks.
-- (Optional) If you have a YouTube API key, append it to the list of environment variables.
+Deploy to Cloud Run.
 
-```powershell
-gcloud run deploy study-squad-ai `
-  --image gcr.io/<PROJECT_ID>/study-squad-ai `
-  --platform managed `
-  --allow-unauthenticated `
-  --region us-central1 `
-  --set-env-vars GEMINI_API_KEY=your_gemini_api_key
+```bash
+gcloud run deploy study-squad-ai \
+    --image gcr.io/<PROJECT_ID>/study-squad-ai \
+    --platform managed \
+    --allow-unauthenticated \
+    --region us-central1 \
+    --set-env-vars GEMINI_API_KEY=your_api_key
 ```
 
-*Note: In Windows CMD, replace the backticks (`` ` ``) with carets (`^`) for multi-line commands, or write it all as a single line.*
+---
 
+# Testing
 
+The repository includes component and integration tests for the major modules:
+
+```bash
+python -m tests.test_quiz_generation
+
+python -m tests.test_tutor_agent
+
+python -m tests.test_resource_agent
+
+python -m tests.test_memory_server
+
+python -m tests.test_coordinator_agent
+```
+
+These tests verify quiz generation, grading, resource recommendation, memory persistence, and end-to-end agent coordination.
+
+---
+
+# Google ADK Demonstration
+
+The repository also contains a lightweight Google ADK implementation demonstrating how the reusable Quiz Generation Skill can be exposed as an ADK `FunctionTool`.
+
+This complements the production multi-agent architecture while showcasing concepts covered throughout Google's AI Agents course.
+
+---
+
+# Future Work
+
+Potential future enhancements include:
+
+- Cloud SQL for scalable data persistence
+- User authentication
+- Additional academic subjects
+- Adaptive learning paths
+- Richer learning analytics
+- Expanded educational resource providers
+
+---
+
+# License
+
+This project is licensed under the MIT License.
