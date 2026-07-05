@@ -3,7 +3,7 @@
 ## Resources
 
 - **Live App**: https://study-squad-ai-959780117802.us-central1.run.app/
-- **Technical Write-up**: [Study Squad AI Write-up](docs/Study_Squad_AI_Writeup.pdf)
+- **Technical Write-up**: [Study Squad AI Write-up](docs/Study_Squad_AI_WriteUp.pdf)
 - **YouTube Demo**: https://www.youtube.com/watch?v=kGuBN9sbu0M
 
 ## Introduction
