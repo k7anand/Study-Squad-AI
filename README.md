@@ -12,16 +12,16 @@ The project demonstrates modern agentic AI concepts that include:
 
 ## Repository Structure
 
-agents/ - Specialized AI agents
-adk_app/ - Google ADK demonstration
-mcp_servers/ - MCP Servers and tool integrations
-skills/ - Reusable agent skills
-streamlit_app/ - User interface and application entry point
-tests/ - Test suite
-database.py - SQLite utilities
-grading.py - Quiz grading logic 
-Dockerfile
-requirements.txt
+- agents/ - Specialized AI agents
+- adk_app/ - Google ADK demonstration
+- mcp_servers/ - MCP Servers and tool integrations
+- skills/ - Reusable agent skills
+- streamlit_app/ - User interface and application entry point
+- tests/ - Test suite
+- database.py - SQLite utilities
+- grading.py - Quiz grading logic 
+- Dockerfile
+- requirements.txt
 
 ## Features
 

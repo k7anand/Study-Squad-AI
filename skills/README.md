@@ -29,7 +29,5 @@ Outputs:
 
 
 
-This skill is currently used by the Tutor Agent. 
-
-
+This skill is used by the Tutor Agent to generate personalized assessments and is also exposed as an ADK FunctionTool in the adk\_app demonstration.
 

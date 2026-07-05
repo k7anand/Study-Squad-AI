@@ -18,4 +18,5 @@ Analyzes quiz performance, identifies knowledge gaps, and provides personalized 
 
 Retrieves educational resources and learning materials using tools exposed through MCP servers.
 
-These agents are orchestrated using Google ADK and work together to provide a personalized learning experience.
+These agents are orchestrated by the Coordinator Agent within Study Squad AI's custom multi-agent architecture.
+
