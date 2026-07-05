@@ -1,6 +1,12 @@
 # Study Squad AI
 
-YouTube Demo: https://www.youtube.com/watch?v=kGuBN9sbu0M
+## Resources
+
+- **Live App*: https://study-squad-ai-959780117802.us-central1.run.app/
+- **Technical Write-up**: [Study Squad AI Write-up](docs/Study_Squad_AI_Writeup.pdf)
+- **YouTube Demo**: https://www.youtube.com/watch?v=kGuBN9sbu0M
+
+## Introduction
 
 Study Squad AI is an AI-powered educational assistant that helps students learn through personalized assessments, progress tracking, motivational coaching, and curated learning resources. Rather than acting as a general-purpose chatbot, Study Squad AI coordinates multiple specialized AI agents that work together to generate quizzes, evaluate student performance, identify learning gaps, recommend educational resources, and monitor progress across study sessions. The application was developed for Kaggle's **AI Agents: Intensive Vibe Coding Capstone** under the **Agents for Good** track.
 
@@ -16,6 +22,7 @@ The project demonstrates modern agentic AI concepts that include:
 
 - agents/ - Specialized AI agents
 - adk_app/ - Google ADK demonstration
+- docs/ - Technical documentation and project write-up
 - mcp_servers/ - MCP Servers and tool integrations
 - skills/ - Reusable agent skills
 - streamlit_app/ - User interface and application entry point
@@ -186,8 +193,6 @@ GEMINI_API_KEY=your_api_key
 
 ## Run the Application
 
-These commands assume that Docker is installed and that you have already authenticated with Google Cloud using the Google Cloud CLI.
-
 ```bash
 streamlit run streamlit_app/app.py
 ```
@@ -223,6 +228,7 @@ http://localhost:8501
 ---
 
 # Deploying to Google Cloud Run
+
 
 ## Prerequisites
 
