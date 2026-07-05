@@ -1,5 +1,7 @@
 # Study Squad AI
 
+YouTube Demo: https://www.youtube.com/watch?v=kGuBN9sbu0M
+
 Study Squad AI is an AI-powered educational assistant that helps students learn through personalized assessments, progress tracking, motivational coaching, and curated learning resources. Rather than acting as a general-purpose chatbot, Study Squad AI coordinates multiple specialized AI agents that work together to generate quizzes, evaluate student performance, identify learning gaps, recommend educational resources, and monitor progress across study sessions. The application was developed for Kaggle's **AI Agents: Intensive Vibe Coding Capstone** under the **Agents for Good** track.
 
 The project demonstrates modern agentic AI concepts that include:
